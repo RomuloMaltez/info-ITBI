@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Não Incidência de ITBI | Porto Velho</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul-pv: #1a4b8c;
+    --azul-claro: #2563a8;
+    --verde: #0f7c55;
+    --laranja: #c05c00;
+    --amarelo: #f59e0b;
+    --cinza-bg: #f4f6fa;
+    --cinza-borda: #dce3ef;
+    --texto: #1e2a3a;
+    --subtexto: #4a5568;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cinza-bg);
+    color: var(--texto);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* CABEÇALHO */
+  .header {
+    background: linear-gradient(135deg, var(--azul-pv) 0%, var(--azul-claro) 100%);
+    border-radius: 14px 14px 0 0;
+    padding: 2rem 2.5rem 1.8rem;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 20px rgba(26,75,140,0.25);
+  }
+
+  .header .brasao {
+    font-size: 2rem;
+    margin-bottom: .4rem;
+  }
+
+  .header h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: .35rem;
+  }
+
+  .header .subtitulo {
+    font-size: .88rem;
+    opacity: .85;
+    font-weight: 400;
+  }
+
+  .header .badge-legal {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 20px;
+    padding: .25rem .9rem;
+    font-size: .78rem;
+    font-weight: 600;
+    margin-top: .8rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  /* ALERTA INTRODUTÓRIO */
+  .alerta-intro {
+    background: #fffbeb;
+    border-left: 4px solid var(--amarelo);
+    border-radius: 0;
+    padding: 1rem 1.5rem;
+    font-size: .9rem;
+    color: #78350f;
+    line-height: 1.6;
+    border-bottom: 1px solid #fde68a;
+  }
+
+  .alerta-intro strong { color: #92400e; }
+
+  /* CORPO DO FAQ */
+  .faq-body {
+    background: #ffffff;
+    border-radius: 0 0 14px 14px;
+    border: 1px solid var(--cinza-borda);
+    border-top: none;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(26,75,140,0.08);
+  }
+
+  /* SEÇÃO */
+  .secao-titulo {
+    background: var(--cinza-bg);
+    border-top: 1px solid var(--cinza-borda);
+    border-bottom: 1px solid var(--cinza-borda);
+    padding: .7rem 1.8rem;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--azul-pv);
+  }
+
+  /* ITEM FAQ */
+  .faq-item {
+    border-bottom: 1px solid var(--cinza-borda);
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-pergunta {
+    display: flex;
+    align-items: flex-start;
+    gap: .9rem;
+    padding: 1.2rem 1.8rem;
+    cursor: pointer;
+    transition: background .15s;
+    user-select: none;
+  }
+
+  .faq-pergunta:hover {
+    background: #f0f4fb;
+  }
+
+  .faq-icone {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-top: .05rem;
+  }
+
+  .faq-pergunta-texto {
+    flex: 1;
+    font-size: .97rem;
+    font-weight: 600;
+    color: var(--azul-pv);
+    line-height: 1.45;
+  }
+
+  .faq-chevron {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--cinza-bg);
+    border: 1px solid var(--cinza-borda);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    color: var(--azul-claro);
+    transition: transform .25s, background .15s;
+    margin-top: .1rem;
+  }
+
+  .faq-item.aberto .faq-chevron {
+    transform: rotate(180deg);
+    background: var(--azul-pv);
+    color: white;
+    border-color: var(--azul-pv);
+  }
+
+  .faq-resposta {
+    display: none;
+    padding: 0 1.8rem 1.3rem 3.8rem;
+    font-size: .92rem;
+    color: var(--subtexto);
+    line-height: 1.7;
+  }
+
+  .faq-item.aberto .faq-resposta {
+    display: block;
+    animation: slideDown .2s ease;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .faq-resposta p { margin-bottom: .7rem; }
+  .faq-resposta p:last-child { margin-bottom: 0; }
+
+  .faq-resposta .destaque {
+    background: #eff6ff;
+    border-left: 3px solid var(--azul-claro);
+    padding: .6rem .9rem;
+    border-radius: 0 6px 6px 0;
+    margin: .6rem 0;
+    font-size: .88rem;
+    color: #1e3a5f;
+  }
+
+  .faq-resposta .alerta {
+    background: #fff7ed;
+    border-left: 3px solid var(--laranja);
+    padding: .6rem .9rem;
+    border-radius: 0 6px 6px 0;
+    margin: .6rem 0;
+    font-size: .88rem;
+    color: #7c2d12;
+  }
+
+  .faq-resposta .base-legal {
+    font-size: .8rem;
+    color: #718096;
+    font-style: italic;
+    margin-top: .6rem;
+    padding-top: .5rem;
+    border-top: 1px dashed var(--cinza-borda);
+  }
+
+  /* TABELA */
+  .tabela-prazo {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .84rem;
+    margin: .7rem 0;
+  }
+  .tabela-prazo th {
+    background: var(--azul-pv);
+    color: white;
+    padding: .45rem .7rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  .tabela-prazo td {
+    padding: .4rem .7rem;
+    border-bottom: 1px solid var(--cinza-borda);
+    vertical-align: top;
+  }
+  .tabela-prazo tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  /* BOTÃO CTA */
+  .cta-box {
+    background: linear-gradient(135deg, #0f5c38, var(--verde));
+    border-radius: 10px;
+    padding: 1.5rem 1.8rem;
+    margin: 1.5rem 1.8rem 1.8rem;
+    text-align: center;
+    color: white;
+  }
+
+  .cta-box .cta-titulo {
+    font-family: 'Merriweather', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: .4rem;
+  }
+
+  .cta-box .cta-subtexto {
+    font-size: .88rem;
+    opacity: .9;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: white;
+    color: var(--verde);
+    font-weight: 700;
+    font-size: .95rem;
+    padding: .7rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+
+  .cta-btn .cta-icone { margin-right: .4rem; }
+
+  /* RODAPÉ */
+  .rodape {
+    text-align: center;
+    margin-top: 1.2rem;
+    font-size: .78rem;
+    color: #718096;
+    line-height: 1.6;
+  }
+
+  /* EXPANDIR TODOS */
+  .controles {
+    display: flex;
+    justify-content: flex-end;
+    padding: .7rem 1.8rem;
+    gap: .8rem;
+    border-bottom: 1px solid var(--cinza-borda);
+  }
+
+  .btn-controle {
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--azul-claro);
+    background: none;
+    border: 1px solid var(--cinza-borda);
+    border-radius: 6px;
+    padding: .3rem .8rem;
+    cursor: pointer;
+    transition: background .15s;
+  }
+
+  .btn-controle:hover { background: #eff6ff; }
+
+  @media (max-width: 600px) {
+    .header { padding: 1.5rem 1.3rem; }
+    .header h1 { font-size: 1.1rem; }
+    .faq-pergunta { padding: 1rem 1.2rem; }
+    .faq-resposta { padding: 0 1.2rem 1.1rem 3rem; }
+    .cta-box { margin: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- CABEÇALHO -->
+  <div class="header">
+    <div class="brasao">🏛️</div>
+    <h1>Perguntas Frequentes<br>Não Incidência de ITBI</h1>
+    <div class="subtitulo">Secretaria Municipal de Economia — SEMEC | Porto Velho – RO</div>
+    <div class="badge-legal">Art. 232 da LC nº 878/2021 · Art. 156, II, CF/88</div>
+  </div>
+
+  <!-- ALERTA -->
+  <div class="alerta-intro">
+    ⚠️ <strong>Importante:</strong> A não incidência de ITBI não é automática. O reconhecimento depende de <strong>análise prévia pela Administração Tributária</strong>, mediante processo administrativo instruído com a documentação exigida. O cartório só poderá lavrar a escritura após apresentação da certidão de reconhecimento emitida pelo Fisco Municipal.
+  </div>
+
+  <!-- CORPO -->
+  <div class="faq-body">
+
+    <div class="controles">
+      <button class="btn-controle" onclick="toggleAll(true)">+ Expandir tudo</button>
+      <button class="btn-controle" onclick="toggleAll(false)">− Recolher tudo</button>
+    </div>
+
+    <!-- SEÇÃO 1 -->
+    <div class="secao-titulo">📌 Entendendo a Não Incidência</div>
+
+    <!-- 1 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">💡</span>
+        <span class="faq-pergunta-texto">O que é não incidência de ITBI? É o mesmo que isenção?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Não. São institutos jurídicos distintos. A <strong>não incidência</strong> significa que o próprio fato gerador do imposto não ocorre — a situação está fora do campo de incidência tributária definido pela Constituição e pela lei. Já a <strong>isenção</strong> pressupõe que o fato gerador ocorreria, mas o legislador optou por dispensar o pagamento.</p>
+        <div class="destaque">Na não incidência de ITBI para operações societárias, a Constituição Federal (art. 156, II) e a LC 878/2021 (art. 232) simplesmente excluem essas transmissões do campo tributável — não há tributo a ser dispensado.</div>
+        <div class="base-legal">Base legal: art. 156, II, CF/88; art. 232, LC nº 878/2021; art. 175 do CTN (distinção entre isenção e não incidência).</div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">📋</span>
+        <span class="faq-pergunta-texto">Quais são os casos de não incidência previstos em lei?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>O art. 232 da LC nº 878/2021 (CTM de Porto Velho) prevê quatro hipóteses de não incidência:</p>
+        <table class="tabela-prazo">
+          <tr><th>Hipótese</th><th>Descrição resumida</th></tr>
+          <tr><td><strong>Inciso I</strong></td><td>Transmissão de bens/direitos incorporados ao patrimônio de pessoa jurídica <em>em realização de capital</em></td></tr>
+          <tr><td><strong>Inciso II</strong></td><td>Transmissão decorrente de fusão, incorporação, cisão ou extinção de pessoa jurídica (condicionada à atividade não preponderante)</td></tr>
+          <tr><td><strong>Inciso III</strong></td><td>Retorno do bem ao sócio alienante por desincorporação do patrimônio da PJ</td></tr>
+          <tr><td><strong>Inciso IV</strong></td><td>Retorno do bem ao antigo proprietário por retrovenda, retrocessão ou pacto de melhor comprador</td></tr>
+        </table>
+        <div class="base-legal">Base legal: art. 232, I a IV, LC nº 878/2021; art. 482, I a IV, Decreto nº 18.749/2023.</div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 2 -->
+    <div class="secao-titulo">🏢 Integralização de Capital (Inciso I)</div>
+
+    <!-- 3 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">🏗️</span>
+        <span class="faq-pergunta-texto">Vou integralizar um imóvel no capital de minha empresa. Há não incidência total?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>A não incidência é <strong>parcial</strong>. Ela se aplica apenas até o limite do valor do capital social a ser integralizado com aquele bem. Se o valor do imóvel superar o capital social subscrito, <strong>incidirá ITBI sobre a parcela excedente</strong>.</p>
+        <div class="destaque">
+          <strong>Exemplo:</strong> Imóvel avaliado em R$ 500.000,00 integralizado para capital de R$ 400.000,00 → a não incidência cobre R$ 400.000,00; sobre os R$ 100.000,00 excedentes incide ITBI normalmente.
+        </div>
+        <div class="alerta">⚠️ A avaliação do imóvel para fins de ITBI segue os critérios do art. 233 do CTM, podendo diferir do valor constante no contrato social.</div>
+        <div class="base-legal">Base legal: art. 232, I e §1º, LC nº 878/2021; art. 482, I e §1º, Decreto nº 18.749/2023.</div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">🏘️</span>
+        <span class="faq-pergunta-texto">Minha empresa é imobiliária ou de locação. Tenho direito à não incidência na integralização?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>A restrição por atividade preponderante (compra/venda, locação, arrendamento mercantil) aplica-se <strong>apenas ao inciso II</strong> (fusão, incorporação, cisão, extinção). Para o <strong>inciso I</strong> (integralização de capital), <strong>não há essa ressalva</strong> — a não incidência até o limite do capital aplica-se independentemente do objeto social da empresa.</p>
+        <div class="destaque">Isso foi pacificado pelo STF no Tema 796 (RE 796.376), com repercussão geral reconhecida, que restringiu a exceção da atividade preponderante às hipóteses do inciso II.</div>
+        <div class="base-legal">Base legal: art. 232, I, LC nº 878/2021; STF, RE 796.376, Tema 796 (repercussão geral).</div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 3 -->
+    <div class="secao-titulo">🔄 Fusão, Incorporação, Cisão e Extinção (Inciso II)</div>
+
+    <!-- 5 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">🔗</span>
+        <span class="faq-pergunta-texto">Nossa empresa passará por fusão com outra. O ITBI sobre os imóveis transferidos é devido?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Em regra, <strong>não incide ITBI</strong> nas transmissões decorrentes de fusão, incorporação, cisão ou extinção de pessoa jurídica. A exceção ocorre se a empresa adquirente tiver <strong>atividade preponderante</strong> de compra e venda de imóveis, locação de bens imóveis ou arrendamento mercantil.</p>
+        <div class="alerta">⚠️ A preponderância é verificada com base em 50%+ da receita operacional nos <strong>2 anos anteriores</strong> e nos <strong>2 anos subsequentes</strong> à aquisição. Se constatada a preponderância a posteriori, o ITBI torna-se exigível retroativamente ao valor do bem na data da aquisição.</div>
+        <div class="base-legal">Base legal: art. 232, II e §§ 2º a 4º, LC nº 878/2021; art. 156, II, CF/88.</div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">📊</span>
+        <span class="faq-pergunta-texto">Como é calculada a "atividade preponderante" que afasta a não incidência?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Considera-se preponderante a atividade quando <strong>mais de 50% da receita operacional</strong> da empresa adquirente, no período de análise, decorrer de compra/venda de imóveis, locação de imóveis ou arrendamento mercantil.</p>
+        <table class="tabela-prazo">
+          <tr><th>Situação da empresa adquirente</th><th>Período de apuração</th></tr>
+          <tr><td>Existência ≥ 2 anos antes da aquisição</td><td>2 anos antes + 2 anos depois da aquisição</td></tr>
+          <tr><td>Início após a aquisição ou menos de 2 anos antes</td><td>3 primeiros anos após a data da aquisição</td></tr>
+          <tr><td>Existência inferior ao período mínimo</td><td>Prejudicada a análise — <strong>ITBI incide</strong></td></tr>
+        </table>
+        <div class="alerta">⚠️ Se a empresa adquirente tiver existência inferior ao período previsto, o Fisco não consegue apurar a preponderância e o imposto torna-se imediatamente devido (art. 232, §6º, CTM).</div>
+        <div class="base-legal">Base legal: art. 232, §§ 2º, 3º e 6º, LC nº 878/2021.</div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">📦</span>
+        <span class="faq-pergunta-texto">A transferência envolver a totalidade do patrimônio da empresa alienante. Ainda se avalia a preponderância?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p><strong>Não.</strong> Quando a transmissão de bens ou direitos for realizada em conjunto com a <strong>totalidade do patrimônio</strong> da pessoa jurídica alienante, as regras de verificação de preponderância (§§ 2º a 4º) não se aplicam. A não incidência é plena nesse caso.</p>
+        <div class="destaque">Esta é uma exceção importante para operações de extinção total da empresa com transferência integral do acervo.</div>
+        <div class="base-legal">Base legal: art. 232, §5º, LC nº 878/2021.</div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 4 -->
+    <div class="secao-titulo">↩️ Desincorporação e Retrovenda (Incisos III e IV)</div>
+
+    <!-- 8 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">↩️</span>
+        <span class="faq-pergunta-texto">Integalizei um imóvel na minha empresa e agora quero retirá-lo. Há ITBI no retorno?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Não, desde que o bem retorne <strong>ao mesmo sócio que o conferiu</strong> (o alienante original). O inciso III prevê a não incidência na desincorporação do bem para os mesmos alienantes.</p>
+        <div class="alerta">⚠️ Se o bem retornar a sócio diferente daquele que o integralizou, ou se houver compensação financeira adicional, poderá configurar fato gerador tributável. A situação deve ser analisada caso a caso.</div>
+        <div class="base-legal">Base legal: art. 232, III, LC nº 878/2021.</div>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">🔙</span>
+        <span class="faq-pergunta-texto">Vendi um imóvel com cláusula de retrovenda e o comprador está devolvendo. Pago ITBI?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Não. O retorno do bem ao domínio do <strong>antigo proprietário</strong> por força de <strong>retrovenda, retrocessão ou pacto de melhor comprador</strong> não é fato gerador de ITBI — é simplesmente o desfazimento de uma transmissão anterior.</p>
+        <div class="destaque">A retrovenda é cláusula contratual que confere ao vendedor o direito de recomprar o imóvel no prazo máximo de 3 anos (art. 505 do Código Civil). Sua efetivação não configura nova transmissão tributável.</div>
+        <div class="base-legal">Base legal: art. 232, IV, LC nº 878/2021; art. 505 do Código Civil (retrovenda).</div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 5 -->
+    <div class="secao-titulo">📂 Processo Administrativo e Documentação</div>
+
+    <!-- 10 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">📝</span>
+        <span class="faq-pergunta-texto">Como solicito o reconhecimento da não incidência?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>O reconhecimento da não incidência deve ser <strong>requerido formalmente</strong> à Administração Tributária Municipal, mediante processo administrativo instruído com o requerimento específico e a documentação comprobatória.</p>
+        <p>O requerimento deve ser preenchido e enviado eletronicamente pelo link abaixo, gerando número de protocolo para acompanhamento:</p>
+        <div class="destaque">📌 <strong>Acesse o formulário:</strong> <a href="https://form-itbi-imunidade.vercel.app/" target="_blank" style="color: var(--azul-claro); font-weight:600;">form-itbi-imunidade.vercel.app</a></div>
+        <div class="base-legal">Base legal: art. 244, II, LC nº 878/2021; art. 502, II, Decreto nº 18.749/2023.</div>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">📎</span>
+        <span class="faq-pergunta-texto">Quais documentos são necessários para instruir o processo?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>A documentação exigida varia conforme a hipótese pleiteada. Em geral, são necessários:</p>
+        <table class="tabela-prazo">
+          <tr><th>Documento</th><th>Finalidade</th></tr>
+          <tr><td>Contrato Social / Estatuto e alterações</td><td>Comprovar a operação societária e o objeto social</td></tr>
+          <tr><td>Certidão de registro da PJ na JUCERO</td><td>Verificar existência e tempo de atividade</td></tr>
+          <tr><td>Ato societário (fusão/incorporação/cisão)</td><td>Embasar a operação que origina a não incidência</td></tr>
+          <tr><td>Balanços/DRE dos 2 anos anteriores</td><td>Apuração da atividade preponderante (inciso II)</td></tr>
+          <tr><td>Matrícula atualizada do imóvel (CRI)</td><td>Identificação e titularidade do bem</td></tr>
+          <tr><td>Instrumento da retrovenda (se inciso IV)</td><td>Comprovar a cláusula e o exercício do direito</td></tr>
+        </table>
+        <div class="alerta">⚠️ O Fisco pode exigir documentação complementar durante a análise. O prazo para apresentação dos documentos será fixado na intimação.</div>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">⏱️</span>
+        <span class="faq-pergunta-texto">Qual o prazo para análise do meu pedido?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>O processo será analisado pela Divisão de Tributação Imobiliária (DTIM/DEF) em conformidade com os prazos estabelecidos na legislação municipal de processo administrativo tributário. O pedido <strong>deve ser protocolado com antecedência</strong> em relação à lavratura da escritura no cartório.</p>
+        <div class="alerta">⚠️ <strong>O cartório não pode lavrar a escritura</strong> sem a apresentação do comprovante de pagamento do ITBI ou da certidão de reconhecimento de imunidade, isenção ou não incidência emitida pelo Fisco Municipal (art. 244 do CTM / art. 502 do Regulamento).</div>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggle(this)">
+        <span class="faq-icone">⚠️</span>
+        <span class="faq-pergunta-texto">O que acontece se a não incidência for concedida indevidamente?</span>
+        <span class="faq-chevron">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Se verificada a preponderância de atividade imobiliária após a concessão (inciso II), o ITBI torna-se <strong>imediatamente exigível</strong>, calculado sobre o valor do bem na data da aquisição, com os acréscimos legais.</p>
+        <p>Declarações falsas ou omissão de informações no processo administrativo configuram infração tributária, sujeitando o contribuinte às penalidades previstas no Capítulo X do Título II da LC nº 878/2021.</p>
+        <div class="base-legal">Base legal: art. 232, §4º, LC nº 878/2021; arts. 246 e ss. do CTM.</div>
+      </div>
+    </div>
+
+    <!-- CTA FINAL -->
+    <div class="cta-box">
+      <div class="cta-titulo">📋 Solicite o Reconhecimento da Não Incidência</div>
+      <div class="cta-subtexto">Preencha o requerimento eletrônico, anexe os documentos e acompanhe seu processo online.<br>O processo é gratuito e integralmente digital.</div>
+      <a href="https://form-itbi-imunidade.vercel.app/" target="_blank" class="cta-btn">
+        <span class="cta-icone">🖊️</span> Acessar o Formulário de Requerimento
+      </a>
+    </div>
+
+  </div><!-- fim faq-body -->
+
+  <div class="rodape">
+    Secretaria Municipal de Economia (SEMEC) · Departamento de Fiscalização (DEF/SERM)<br>
+    Fundamento: Art. 156, II, CF/88 · Art. 232, LC nº 878/2021 · Decreto nº 18.749/2023<br>
+    <em>Este FAQ tem caráter informativo e não substitui consulta tributária formal.</em>
+  </div>
+
+</div><!-- fim container -->
+
+<script>
+  function toggle(el) {
+    const item = el.closest('.faq-item');
+    item.classList.toggle('aberto');
+  }
+
+  function toggleAll(abrir) {
+    document.querySelectorAll('.faq-item').forEach(item => {
+      if (abrir) item.classList.add('aberto');
+      else item.classList.remove('aberto');
+    });
+  }
+</script>
+</body>
+</html>
