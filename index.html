@@ -286,7 +286,8 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            transition: width 2s ease;
+            transition: width 1s ease-out;
+            will-change: width;
             position: relative;
             min-width: 0;
         }
@@ -383,28 +384,51 @@
 
         .interactive-button-primary {
             background: linear-gradient(135deg, #e84393 0%, #d63031 100%) !important;
-            padding: 18px 40px !important;
-            font-size: 1.3em !important;
-            font-weight: bold !important;
-            animation: pulse 2s infinite !important;
+            padding: 16px 32px !important;
+            font-size: 1.1rem !important;
+            font-weight: 600 !important;
+            border-radius: 50px !important;
+            color: white !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            box-shadow: 0 4px 15px rgba(214, 48, 49, 0.3) !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            border: none !important;
+            cursor: pointer !important;
+        }
+
+        .interactive-button-primary:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 25px rgba(214, 48, 49, 0.5) !important;
+            filter: brightness(1.1) !important;
         }
 
         .interactive-button-secondary {
-            background: rgba(253, 121, 168, 0.1) !important;
-            color: #fd79a8 !important;
-            border: 2px solid #fd79a8 !important;
+            background: rgba(253, 121, 168, 0.05) !important;
+            color: #d63031 !important;
+            padding: 16px 32px !important;
+            font-size: 1.1rem !important;
+            font-weight: 600 !important;
+            border-radius: 50px !important;
+            border: 2px solid rgba(214, 48, 49, 0.2) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            cursor: pointer !important;
         }
 
-        @keyframes pulse {
+        .interactive-button-secondary:hover {
+            background: rgba(214, 48, 49, 0.1) !important;
+            border-color: #d63031 !important;
+            transform: translateY(-3px) !important;
+        }
 
-            0%,
-            100% {
-                box-shadow: 0 8px 25px rgba(232, 67, 147, 0.3);
-            }
-
-            50% {
-                box-shadow: 0 8px 25px rgba(232, 67, 147, 0.5);
-            }
+        .btn-icon {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2.5;
         }
 
         .step-indicator {
@@ -816,7 +840,7 @@
             </div>
 
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 20%;"></div>
+                <div class="progress-fill" style="width: 0%;" data-percentage="20"></div>
                 <div class="progress-text">Escolha o tipo do seu imóvel</div>
             </div>
 
@@ -895,11 +919,15 @@
             </div>
 
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 60%;"></div>
+                <div class="progress-fill" style="width: 0%;" data-percentage="60"></div>
                 <div class="progress-text">ITBI Urbano: R$ 3.600,00</div>
             </div>
 
-            <button class="interactive-button" onclick="nextStep()">Ver situações especiais →</button>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="interactive-button" onclick="goToStep(4)">Ver situações especiais →</button>
+                <button class="interactive-button" onclick="goToStep(5)" style="background: #00b894;">Pular para resumo
+                    final 📋</button>
+            </div>
         </div>
 
         <!-- Seção 3: Cálculo Rural -->
@@ -910,13 +938,15 @@
             </h2>
 
             <p style="font-size: 1.1em; margin-bottom: 20px;">
-                Para imóveis rurais, o cálculo é baseado na <strong>Tabela de Valor da Terra Nua (VTN)</strong>
+                Para imóveis rurais, o cálculo é baseado na <strong>Tabela de Valor da Terra Nua (VTN), por aptidão
+                    agrícola,</strong>
                 multiplicada pela área, mais o valor das benfeitorias (casas, cercas, currais, etc.).
             </p>
 
             <div class="example-house">
                 <h4>🌾 Exemplo: Compra de Sítio</h4>
                 <p><strong>Sítio na zona rural de Porto Velho</strong><br>
+                    Aptidão agrícola: Preservação de fauna ou flora<br>
                     Área: 5 hectares (50.000 m²) com casa simples</p>
             </div>
 
@@ -925,7 +955,9 @@
                 <h4 style="color: #2d3436; margin-bottom: 10px;">🌱 Como calcular imóvel rural:</h4>
                 <p><strong>🗺️ Valor da Terra Nua:</strong> Hectare × <a
                         href="https://semfaz.portovelho.ro.gov.br/arquivos/lista/52319?laudo-de-avaliacao-de-valor-da-terra-nua"
-                        target="_blank">VTN (valor por hectare da região)</a>.</p>
+                        target="_blank" style="color: #0984e3; text-decoration: underline; font-weight: 500;">
+                        VTN (valor por hectare da região) 🔗
+                    </a>.</p>
                 <p><strong>🏠 Benfeitorias:</strong> Casas, galpões, cercas, poços, etc.</p>
                 <p><strong>💰 Valor Declarado:</strong> Preço total que você está pagando.</p>
                 <p style="margin-top: 15px; font-weight: bold; color: #d63031;">Usa-se o MAIOR valor entre
@@ -940,8 +972,8 @@
                 </div>
                 <div class="factor-card">
                     <h4>🌾 VTN por Hectare</h4>
-                    <div class="factor-value">R$ 4.500</div>
-                    <p>Valor da Terra Nua para a região</p>
+                    <div class="factor-value">R$ 5.621,62</div>
+                    <p>Valor da Terra Nua para a aptidão agrícola</p>
                 </div>
                 <div class="factor-card">
                     <h4>🏠 Benfeitorias</h4>
@@ -955,21 +987,21 @@
                 <div
                     style="font-family: 'Courier New', monospace; text-align: left; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin: 15px 0;">
                     <strong>1. Valor da Terra:</strong><br>
-                    5 hectares × R$ 4.500 = R$ 22.500<br><br>
+                    5 hectares × R$ 5.621,62 = R$ 28.108,10<br><br>
                     <strong>2. Total VTN + Benfeitorias:</strong><br>
-                    R$ 22.500 + R$ 35.000 = R$ 57.500<br><br>
+                    R$ 28.108,10 + R$ 35.000 = R$ 63.108,10<br><br>
                     <strong>3. Valor Declarado:</strong><br>
                     R$ 60.000 (preço da compra)<br><br>
                     <strong>4. Base de Cálculo:</strong><br>
-                    Maior valor = R$ 60.000
+                    Maior valor = R$ 63.108,10
                 </div>
             </div>
 
             <div class="formula-box">
                 <div class="formula-title">🧮 Fórmula do ITBI Rural</div>
                 <div class="formula-content">ITBI = Base de Cálculo × 2%</div>
-                <div class="formula-content">ITBI = R$ 60.000,00 × 2%</div>
-                <div class="formula-content"><strong>ITBI = R$ 1.200,00</strong></div>
+                <div class="formula-content">ITBI = R$ 63.108,10 × 2%</div>
+                <div class="formula-content"><strong>ITBI = R$ 1.262,16</strong></div>
             </div>
 
             <div class="tip-box">
@@ -978,11 +1010,15 @@
             </div>
 
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 60%;"></div>
-                <div class="progress-text">ITBI Rural: R$ 1.200,00</div>
+                <div class="progress-fill" style="width: 0%;" data-percentage="60"></div>
+                <div class="progress-text">ITBI Rural: R$ 1.262,16</div>
             </div>
 
-            <button class="interactive-button" onclick="nextStep()">Ver situações especiais →</button>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="interactive-button" onclick="goToStep(4)">Ver situações especiais →</button>
+                <button class="interactive-button" onclick="goToStep(5)" style="background: #00b894;">Pular para resumo
+                    final 📋</button>
+            </div>
         </div>
 
         <!-- Seção 4: Situações Especiais -->
@@ -994,8 +1030,7 @@
 
             <p style="font-size: 1.1em; margin-bottom: 20px;">
                 Nem toda transmissão de imóvel paga ITBI! Existem situações onde há isenção ou não incidência do
-                imposto.
-                Veja as principais situações:
+                imposto. Veja as principais situações:
             </p>
 
             <h4 style="color: #d63031; margin: 20px 0 10px 0;">🚫 Quando NÃO se paga ITBI:</h4>
@@ -1054,7 +1089,8 @@
             </div>
 
             <div class="warning-box">
-                <strong>Atenção para empresas:</strong> Se você comprar imóvel em nome de empresa cujo negócio principal
+                <strong>Atenção para empresas:</strong> Se você comprar imóvel em nome de empresa cujo negócio
+                principal
                 é comprar e vender imóveis (mais de 50% da receita), pode perder a isenção e ter que pagar o ITBI
                 retroativamente!
             </div>
@@ -1079,7 +1115,7 @@
             </div>
 
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 80%;"></div>
+                <div class="progress-fill" style="width: 0%;" data-percentage="80"></div>
                 <div class="progress-text">Situações especiais identificadas</div>
             </div>
 
@@ -1115,8 +1151,8 @@
                     style="background: linear-gradient(135deg, #00b894, #00cec9); color: white; padding: 20px; border-radius: 10px;">
                     <h4>🌾 Imóvel Rural</h4>
                     <p>Base: VTN × área + benfeitorias</p>
-                    <h3>Exemplo: R$ 1.200</h3>
-                    <small>Para sítio de R$ 60.000</small>
+                    <h3>Exemplo: R$ 1.262,16</h3>
+                    <small>Para sítio de R$ 63.108,10</small>
                 </div>
 
                 <div
@@ -1575,12 +1611,23 @@
                 </p>
             </div>
 
-            <div style="text-align: center; margin-top: 30px;">
-                <button class="interactive-button-primary" onclick="resetSteps()">🔄 Calcular outro ITBI</button>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px;">
+                <button class="interactive-button-primary" onclick="resetSteps()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="btn-icon">
+                        <path d="M21 12a9 9 0 11-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+                        <path d="M21 3v5h-5" />
+                    </svg>
+                    Calcular outro ITBI
+                </button>
                 <a href="https://gpi-trb.portovelho.ro.gov.br/ServerExec/acessoBase/?idPortal=dbde30ec-cf59-4803-9653-00121a704021"
-                    target="_blank" class="interactive-button-secondary"
-                    style="text-decoration: none; display: inline-block;">
-                    🌐 Portal SEMFAZ Online
+                    target="_blank" class="interactive-button-secondary" style="text-decoration: none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="btn-icon">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="2" y1="12" x2="22" y2="12" />
+                        <path
+                            d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                    </svg>
+                    Portal SEMFAZ Online
                 </a>
             </div>
         </div>
@@ -1924,6 +1971,65 @@
         let selectedType = '';
         const totalSteps = 5;
 
+        function showSpecialSituations() {
+            document.getElementById('special-situations-content').classList.remove('hidden');
+            document.getElementById('special-situations-trigger').classList.add('hidden');
+        }
+
+        function goToStep(step) {
+            // Hide current step
+            document.querySelectorAll('.step-content').forEach(s => s.classList.add('hidden'));
+            document.getElementById('urbano-section')?.classList.add('hidden');
+            document.getElementById('rural-section')?.classList.add('hidden');
+
+            currentStep = step;
+
+            if (currentStep === 3 && selectedType) {
+                // Show the appropriate type section
+                if (selectedType === 'urbano') {
+                    document.getElementById('urbano-section').classList.remove('hidden');
+                } else if (selectedType === 'rural') {
+                    document.getElementById('rural-section').classList.remove('hidden');
+                }
+            } else {
+                const targetElement = document.querySelector(`.step-content[data-step="${currentStep}"]`);
+                if (targetElement) {
+                    targetElement.classList.remove('hidden');
+                }
+            }
+
+            updateStepIndicator();
+            triggerProgressBars();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function triggerProgressBars() {
+            const visibleSection = document.querySelector('.step-content:not(.hidden), #urbano-section:not(.hidden), #rural-section:not(.hidden)');
+            if (visibleSection) {
+                const fill = visibleSection.querySelector('.progress-fill');
+                if (fill && fill.dataset.percentage) {
+                    const targetWidth = fill.dataset.percentage + '%';
+
+                    // Force reset to 0% without transition
+                    fill.style.transition = 'none';
+                    fill.style.width = '0%';
+
+                    // Force reflow
+                    fill.offsetHeight;
+
+                    // Re-enable transition and set target
+                    setTimeout(() => {
+                        fill.style.transition = 'width 0.8s ease-out';
+                        fill.style.width = targetWidth;
+                    }, 10);
+                }
+            }
+        }
+
+        function showSpecialSituations() {
+            // Deprecated - Page 4 content is now shown immediately
+        }
+
         function selectType(type) {
             selectedType = type;
 
@@ -1973,6 +2079,7 @@
                 }
 
                 updateStepIndicator();
+                triggerProgressBars();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
@@ -2067,27 +2174,6 @@
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                 });
-            });
-        }
-
-        // Animate progress bars when they come into view
-        function animateProgressBars() {
-            const progressBars = document.querySelectorAll('.progress-fill');
-            progressBars.forEach(bar => {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            setTimeout(() => {
-                                const currentWidth = entry.target.style.width;
-                                entry.target.style.width = '0%';
-                                setTimeout(() => {
-                                    entry.target.style.width = currentWidth;
-                                }, 100);
-                            }, 500);
-                        }
-                    });
-                });
-                observer.observe(bar);
             });
         }
 
@@ -2303,7 +2389,7 @@
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', () => {
             initializeStepIndicators();
-            animateProgressBars();
+            triggerProgressBars();
             updateStepIndicator();
         });
     </script>
